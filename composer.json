@@ -1,0 +1,54 @@
+{
+    "name": "jxckaroo/state-machine",
+    "description": "A simple state machine to handle status transitions.",
+    "keywords": [
+        "jxckaroo",
+        "state-machine"
+    ],
+    "homepage": "https://github.com/jxckaroo/state-machine",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Jack Mollart",
+            "email": "jack@javeloper.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "illuminate/support": "^8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0",
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jxckaroo\\StateMachine\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jxckaroo\\StateMachine\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Jxckaroo\\StateMachine\\StateMachineServiceProvider"
+            ],
+            "aliases": {
+                "StateMachine": "Jxckaroo\\StateMachine\\StateMachineFacade"
+            }
+        }
+    }
+}
