@@ -2,10 +2,10 @@
 
 namespace Jxckaroo\StateMachine\Rules;
 
-class ExampleRule extends StateRule
+class ExampleRuleFalse extends StateRule
 {
     public function validate(): bool
     {
-        return true;
+        return false;
     }
 }
