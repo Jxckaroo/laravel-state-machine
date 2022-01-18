@@ -12,11 +12,10 @@ trait Stateable
      * Undocumented function
      *
      * @param string $state
-     * @param mixed $primary
-     * @param string|null $primaryField
+     * @param boolean $silent
      * @return boolean
      */
-    public function transitionTo(string $state, mixed $primary = null, string $primaryField = null, bool $silent = false): bool
+    public function transitionTo(string $state, bool $silent = false): bool
     {
         if (!property_exists($this, 'states') || !is_array($this->states)) {
             if ($silent) {
@@ -32,17 +31,6 @@ trait Stateable
             }
 
             throw new StateNotExistException("State `$state` does not exist on `" . $this::class . "`");
-        }
-
-        $self = $this;
-        $field = "id";
-
-        if ($primaryField !== null) {
-            $field = $primaryField;
-        }
-
-        if ($primary !== null) {
-            $self = $this::where($field, $primary)->firstOrfail();
         }
 
         return $this->validate($this->states[$state]);
