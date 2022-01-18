@@ -7,6 +7,12 @@ use Jxckaroo\StateMachine\Exceptions\StateNotExistException;
 
 trait Stateable
 {
+    /**
+     * @param string $state
+     * @param mixed $primary
+     * @param string|null $primaryField
+     * @return void
+     */
     public function transitionTo(string $state, mixed $primary = null, string $primaryField = null)
     {
         if (!property_exists($this, 'states') || !is_array($this->states)) {
