@@ -13,13 +13,12 @@ class CreateStateHistoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('state_history', function (Blueprint $table) {
+        Schema::create('state_histories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('state_id');
             $table->string('name')->nullable();
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->nullableMorphs('model', 'model');
-            $table->nullableMorphs('causer', 'causer');
             $table->timestamps();
 
             $table->index('name');
@@ -34,6 +33,6 @@ class CreateStateHistoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('state_history');
+        Schema::dropIfExists('state_histories');
     }
 }

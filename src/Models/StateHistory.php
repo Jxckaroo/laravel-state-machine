@@ -18,23 +18,13 @@ class StateHistory extends Model
         'name',
         'description',
         'model_type',
-        'model_id',
-        'causer_type',
-        'causer_id',
+        'model_id'
     ];
 
     /**
      * @return MorphTo
      */
     public function model(): MorphTo
-    {
-        return $this->morphTo();
-    }
-
-    /**
-     * @return MorphTo
-     */
-    public function causer(): MorphTo
     {
         return $this->morphTo();
     }

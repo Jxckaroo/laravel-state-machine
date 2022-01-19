@@ -16,9 +16,8 @@ class CreateStatesTable extends Migration
         Schema::create('states', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->nullableMorphs('model', 'model');
-            $table->nullableMorphs('causer', 'causer');
             $table->timestamps();
             $table->index('name');
         });

@@ -2,11 +2,8 @@
 
 namespace Jxckaroo\StateMachine;
 
-use Exception;
 use Jxckaroo\StateMachine\Exceptions\StateMachineException;
 use Jxckaroo\StateMachine\Exceptions\StateNotExistException;
-use Jxckaroo\StateMachine\Models\State;
-use Jxckaroo\StateMachine\Rules\StateRule;
 
 trait Stateable
 {
@@ -37,8 +34,16 @@ trait Stateable
         }
 
         if ($this->validate($this->states[$state])) {
-            app(StateMachine::class)->saveState('testing', 'doyle');
-
+            app(StateMachine::class)
+                ->logStateChanges()
+                ->saveModelState(
+                    $this,
+                    [
+                        'name' => $state,
+                        'model_id' => $this->getKey(),
+                        'model_type' => get_class($this)
+                    ]
+                );
         }
 
         return false;
