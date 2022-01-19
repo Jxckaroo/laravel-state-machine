@@ -2,10 +2,23 @@
 
 namespace Jxckaroo\StateMachine\Rules;
 
+use Illuminate\Database\Eloquent\Model;
+use Jxckaroo\StateMachine\Contracts\StateRule;
+
 class ExampleRule extends StateRule
 {
-    public function validate(): bool
+    public function validate(Model $model): bool
     {
-        return true;
+        return $model->getKey() !== null;
+    }
+
+    public function passes()
+    {
+
+    }
+
+    public function fails()
+    {
+
     }
 }

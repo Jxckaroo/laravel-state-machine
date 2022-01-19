@@ -16,13 +16,14 @@ class StateMachineServiceProvider extends ServiceProvider
          */
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'state-machine');
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'state-machine');
-        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         // $this->loadRoutesFrom(__DIR__.'/routes.php');
 
         if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__.'/../config/config.php' => config_path('state-machine.php'),
-            ], 'config');
+            // Publish the config
+            // $this->publishes([
+            //     __DIR__.'/../config/config.php' => config_path('state-machine.php'),
+            // ], 'config');
 
             // Publishing the views.
             /*$this->publishes([

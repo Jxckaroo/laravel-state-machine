@@ -2,14 +2,17 @@
 
 namespace Jxckaroo\StateMachine;
 
+use Exception;
 use Jxckaroo\StateMachine\Exceptions\StateMachineException;
 use Jxckaroo\StateMachine\Exceptions\StateNotExistException;
+use Jxckaroo\StateMachine\Models\State;
 use Jxckaroo\StateMachine\Rules\StateRule;
 
 trait Stateable
 {
     /**
-     * Undocumented function
+     * Transition the model to a selected state
+     * if the rules pass.
      *
      * @param string $state
      * @param boolean $silent
@@ -33,11 +36,16 @@ trait Stateable
             throw new StateNotExistException("State `$state` does not exist on `" . $this::class . "`");
         }
 
-        return $this->validate($this->states[$state]);
+        if ($this->validate($this->states[$state])) {
+            app(StateMachine::class)->saveState('testing', 'doyle');
+
+        }
+
+        return false;
     }
 
     /**
-     * Undocumented function
+     * Validate that all rules pass
      *
      * @param string|[]string $rule
      * @return void
@@ -45,9 +53,9 @@ trait Stateable
     private function validate(mixed $rule)
     {
         if (is_array($rule)) {
-            return count($rule) == collect($rule)->map(fn ($item) => (new $item)->validate())->filter(fn ($value) => $value == true)->count();
+            return count($rule) == collect($rule)->map(fn ($item) => (new $item)->validate($this))->filter(fn ($value) => $value == true)->count();
         } else {
-            return (new $rule)->validate();
+            return (new $rule)->validate($this);
         }
     }
 }

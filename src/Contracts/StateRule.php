@@ -1,8 +1,10 @@
 <?php
 
-namespace Jxckaroo\StateMachine\Rules;
+namespace Jxckaroo\StateMachine\Contracts;
 
-class StateRule
+use Illuminate\Database\Eloquent\Model;
+
+abstract class StateRule
 {
     /**
      * Rules should return true if passed & false if failed.
@@ -10,20 +12,15 @@ class StateRule
      *
      * @return bool
      */
-    public function validate(): bool
-    {
-        return false;
-    }
+    abstract public function validate(Model $model): bool;
 
     /**
      * Runs when validation passes
      */
-    public function passes()
-    {}
+    abstract public function passes();
 
     /**
      * Runs when validation fails
      */
-    public function fails()
-    {}
+    abstract public function fails();
 }

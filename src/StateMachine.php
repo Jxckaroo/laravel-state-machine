@@ -4,5 +4,8 @@ namespace Jxckaroo\StateMachine;
 
 class StateMachine
 {
-    // Build your next great package.
+    public function saveState(...$args) {
+        print_r($args);
+        exit;
+    }
 }
