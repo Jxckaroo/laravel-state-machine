@@ -20,7 +20,10 @@ class StateMachine
      */
     public function getModelState(Model $model)
     {
-        return State::query()->where("model_type", get_class($model))->where("model_id", $model->getKey())->firstOrNew();
+        return State::query()
+            ->where("model_type", get_class($model))
+            ->where("model_id", $model->getKey())
+            ->firstOrNew();
     }
 
     /**
@@ -36,19 +39,16 @@ class StateMachine
 
         if ($this->logStateChanges && $activeState->getKey() !== null) {
             $this->createStateHistoryEntry($activeState->getAttributes());
-        } else {
-            foreach ($attributes as $attr => $val) {
-                if (property_exists($activeState, $attr)) {
-                    $activeState->{$attr} = $val;
-                }
-            }
-
-            $activeState->save();
-
-            $activeState = $activeState->fresh();
-
-            $this->createStateHistoryEntry($activeState->getAttributes());
         }
+
+        foreach ($attributes as $attr => $val) {
+            if (isset($activeState->getAttributes()[$attr])) {
+                $activeState->{$attr} = $val;
+            }
+        }
+
+        $activeState->save();
+        $activeState = $activeState->fresh();
 
         return $this;
     }

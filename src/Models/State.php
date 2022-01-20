@@ -3,7 +3,7 @@
 namespace Jxckaroo\StateMachine\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class State extends Model
@@ -29,10 +29,10 @@ class State extends Model
     }
 
     /**
-     * @return HasMany
+     * @return MorphMany
      */
-    public function history(): HasMany
+    public function history(): MorphMany
     {
-        return $this->hasMany(StateHistory::class, 'state_id', 'id');
+        return $this->morphMany(StateHistory::class, 'model');
     }
 }

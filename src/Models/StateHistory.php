@@ -3,7 +3,6 @@
 namespace Jxckaroo\StateMachine\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class StateHistory extends Model
@@ -27,13 +26,5 @@ class StateHistory extends Model
     public function model(): MorphTo
     {
         return $this->morphTo();
-    }
-
-    /**
-     * @return BelongsTo
-     */
-    public function state(): BelongsTo
-    {
-        return $this->belongsTo(State::class, 'id', 'state_id');
     }
 }
