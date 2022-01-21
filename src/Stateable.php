@@ -35,9 +35,9 @@ trait Stateable
      *
      * @param string $state
      * @param boolean $silent
-     * @return boolean
+     * @return StateMachine
      */
-    public function transitionTo(string $state, bool $silent = false): bool
+    public function transitionTo(string $state, bool $silent = false): StateMachine
     {
         if (!property_exists($this, 'states') || !is_array($this->states)) {
             if ($silent) {
@@ -55,39 +55,16 @@ trait Stateable
             throw new StateNotExistException("State `$state` does not exist on `" . $this::class . "`");
         }
 
-        // If the state is already active, just return true
-        if ($this->state->name == $state) {
-            return true;
-        }
-
-        if ($this->stateValidates($this->states[$state])) {
-            app(StateMachine::class)
-                ->logStateChanges()
-                ->saveModelState(
-                    $this,
-                    [
-                        'name' => $state,
-                        'model_id' => $this->getKey(),
-                        'model_type' => get_class($this)
-                    ]
-                );
-        }
-
-        return false;
-    }
-
-    /**
-     * Validate that all rules pass
-     *
-     * @param string|[]string $rule
-     * @return void
-     */
-    private function stateValidates(mixed $rule)
-    {
-        if (is_array($rule)) {
-            return count($rule) == collect($rule)->map(fn ($item) => (new $item)->validate($this))->filter(fn ($value) => $value == true)->count();
-        } else {
-            return (new $rule)->validate($this);
-        }
+        return app(StateMachine::class)
+            ->setModel($this)
+            ->logStateChanges()
+            ->setRules($this->states[$state])
+            ->transitionModelState(
+                [
+                    'name' => $state,
+                    'model_id' => $this->getKey(),
+                    'model_type' => get_class($this)
+                ]
+            );
     }
 }

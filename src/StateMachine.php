@@ -14,41 +14,61 @@ class StateMachine
     protected bool $logStateChanges = false;
 
     /**
+     * @var string|[]string
+     */
+    protected mixed $rules;
+
+    /**
+     * @var Model
+     */
+    protected Model $model;
+
+    /**
+     * @var boolean
+     */
+    protected bool $success;
+
+    /**
      * Get the state of the current model
      *
      * @return \Illuminate\Database\Eloquent\Model|static
      */
-    public function getModelState(Model $model)
+    public function getModelState()
     {
         return State::query()
-            ->where("model_type", get_class($model))
-            ->where("model_id", $model->getKey())
+            ->where("model_type", get_class($this->model))
+            ->where("model_id", $this->model->getKey())
             ->firstOrNew();
     }
 
     /**
      * Save the state of the model
      *
-     * @param Model $model
      * @param array $attributes
      * @return self
      */
-    public function saveModelState(Model $model, array $attributes = [])
+    public function transitionModelState(array $attributes = [])
     {
-        $activeState = $this->getModelState($model);
+        if ($this->canTransition($this->rules)) {
+            $activeState = $this->getModelState($this->model);
 
-        if ($this->logStateChanges && $activeState->getKey() !== null) {
-            $this->createStateHistoryEntry($activeState->getAttributes());
-        }
-
-        foreach ($attributes as $attr => $val) {
-            if (isset($activeState->getAttributes()[$attr])) {
-                $activeState->{$attr} = $val;
+            if ($this->logStateChanges && $activeState->getKey() !== null) {
+                $this->createStateHistoryEntry($activeState->getAttributes());
             }
-        }
 
-        $activeState->save();
-        $activeState = $activeState->fresh();
+            foreach ($attributes as $attr => $val) {
+                if (isset($activeState->getAttributes()[$attr])) {
+                    $activeState->{$attr} = $val;
+                }
+            }
+
+            $activeState->save();
+            $activeState = $activeState->fresh();
+
+            $this->success = true;
+        } else {
+            $this->success = false;
+        }
 
         return $this;
     }
@@ -56,7 +76,6 @@ class StateMachine
     /**
      * Save the state of the model
      *
-     * @param Model $model
      * @param array $attributes
      * @return self
      */
@@ -82,5 +101,43 @@ class StateMachine
         $this->logStateChanges = true;
 
         return $this;
+    }
+
+    /**
+     * Validate that all rules pass
+     *
+     * @param string|[]string $rule
+     * @return void
+     */
+    public function canTransition(mixed $rule)
+    {
+        if (is_array($rule)) {
+            return count($rule) == collect($rule)->map(fn ($item) => (new $item)->validate($this->model))->filter(fn ($value) => $value == true)->count();
+        } else {
+            return (new $rule)->validate($this->model);
+        }
+    }
+
+    public function setRules(mixed $rules)
+    {
+        $this->rules = $rules;
+        return $this;
+    }
+
+    public function setModel(Model $model)
+    {
+        $this->model = $model;
+        return $this;
+    }
+
+    public function setSuccess(bool $success)
+    {
+        $this->success = $success;
+        return $this;
+    }
+
+    public function isSuccessful()
+    {
+        return $this->success === true;
     }
 }
