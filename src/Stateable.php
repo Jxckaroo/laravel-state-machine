@@ -7,8 +7,26 @@ use Jxckaroo\StateMachine\Exceptions\StateNotExistException;
 use Jxckaroo\StateMachine\Models\State;
 use Jxckaroo\StateMachine\Models\StateHistory;
 
+/**
+ * @package Jxckaroo\StateMachine
+ */
 trait Stateable
 {
+    /**
+     * @var StateMachine $stateMachine
+     */
+    private StateMachine $stateMachine;
+
+    /**
+     * Initialize the trait
+     *
+     * @return void
+     */
+    public function initializeStateable()
+    {
+        $this->stateMachine = app(StateMachine::class);
+    }
+
     /**
      * Get the current state record of a model
      *
@@ -41,7 +59,7 @@ trait Stateable
     {
         if (!property_exists($this, 'states') || !is_array($this->states)) {
             if ($silent) {
-                return false;
+                return $this->stateMachine;
             }
 
             throw new StateMachineException("`\$states` property not configured correctly on `" . $this::class . "`");
@@ -49,13 +67,13 @@ trait Stateable
 
         if (!array_key_exists($state, $this->states)) {
             if ($silent) {
-                return false;
+                return $this->stateMachine;
             }
 
             throw new StateNotExistException("State `$state` does not exist on `" . $this::class . "`");
         }
 
-        return app(StateMachine::class)
+        return $this->stateMachine
             ->setModel($this)
             ->logStateChanges()
             ->setRules($this->states[$state])
@@ -66,5 +84,26 @@ trait Stateable
                     'model_type' => get_class($this)
                 ]
             );
+    }
+
+    /**
+     * Retrieve the previous state of a model
+     *
+     * @return string|null
+     */
+    public function getPreviousState()
+    {
+        if ($this->state == null) {
+            return null;
+        }
+
+        $keys = array_keys($this->states);
+        $index = array_search($this->state->name, $keys);
+
+        if ($index == false) {
+            return null;
+        }
+
+        return $keys[$index - 1];
     }
 }

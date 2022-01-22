@@ -57,9 +57,7 @@ class StateMachine
             }
 
             foreach ($attributes as $attr => $val) {
-                if (isset($activeState->getAttributes()[$attr])) {
-                    $activeState->{$attr} = $val;
-                }
+                $activeState->{$attr} = $val;
             }
 
             $activeState->save();
