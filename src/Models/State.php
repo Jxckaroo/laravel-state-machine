@@ -9,6 +9,12 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class State extends Model
 {
     /**
+     * Constants
+     */
+    public const PREVIOUS_STATE = 0;
+    public const NEXT_STATE = 1;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>

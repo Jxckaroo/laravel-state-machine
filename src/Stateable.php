@@ -73,6 +73,10 @@ trait Stateable
             throw new StateNotExistException("State `$state` does not exist on `" . $this::class . "`");
         }
 
+        if (empty($state)) {
+            $state = array_key_first($this->states);
+        }
+
         return $this->stateMachine
             ->setModel($this)
             ->logStateChanges()
@@ -86,22 +90,37 @@ trait Stateable
             );
     }
 
+    /**
+     * Transition to next model state
+     *
+     * @return StateMachine
+     */
     public function transitionToNext(): StateMachine
     {
-        return $this->transitionTo($this->nextState());
+        return $this->transitionTo(
+            $this->getSideState(State::NEXT_STATE)
+        );
     }
 
+    /**
+     * Transition to previous model state
+     *
+     * @return StateMachine
+     */
     public function transitionToPrevious(): StateMachine
     {
-        return $this->transitionTo($this->previousState());
+        return $this->transitionTo(
+            $this->getSideState(State::PREVIOUS_STATE)
+        );
     }
 
     /**
-     * Retrieve the previous state of a model
+     * Retrieve the next/previous state of a model
      *
-     * @return string|null
+     * @param int $type
+     * @return string
      */
-    public function previousState()
+    public function getSideState(int $type = State::NEXT_STATE)
     {
         if ($this->state == null) {
             return null;
@@ -114,35 +133,22 @@ trait Stateable
             return null;
         }
 
-        if (!isset($keys[$index - 1])) {
-            return null;
+        $response = null;
+
+        if ($type == State::PREVIOUS_STATE) {
+            if (!isset($keys[$index - 1])) {
+                return null;
+            }
+
+            $response = $keys[$index - 1];
+        } else {
+            if (!isset($keys[$index + 1])) {
+                return null;
+            }
+
+            $response = $keys[$index + 1];
         }
 
-        return $keys[$index - 1];
-    }
-
-    /**
-     * Retrieve the previous state of a model
-     *
-     * @return string|null
-     */
-    public function nextState()
-    {
-        if ($this->state == null) {
-            return null;
-        }
-
-        $keys = array_keys($this->states);
-        $index = array_search($this->state->name, $keys);
-
-        if ($index == false) {
-            return null;
-        }
-
-        if (!isset($keys[$index + 1])) {
-            return null;
-        }
-
-        return $keys[$index + 1];
+        return $response;
     }
 }
