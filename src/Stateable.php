@@ -86,12 +86,22 @@ trait Stateable
             );
     }
 
+    public function transitionToNext(): StateMachine
+    {
+        return $this->transitionTo($this->nextState());
+    }
+
+    public function transitionToPrevious(): StateMachine
+    {
+        return $this->transitionTo($this->previousState());
+    }
+
     /**
      * Retrieve the previous state of a model
      *
      * @return string|null
      */
-    public function getPreviousState()
+    public function previousState()
     {
         if ($this->state == null) {
             return null;
@@ -104,6 +114,35 @@ trait Stateable
             return null;
         }
 
+        if (!isset($keys[$index - 1])) {
+            return null;
+        }
+
         return $keys[$index - 1];
+    }
+
+    /**
+     * Retrieve the previous state of a model
+     *
+     * @return string|null
+     */
+    public function nextState()
+    {
+        if ($this->state == null) {
+            return null;
+        }
+
+        $keys = array_keys($this->states);
+        $index = array_search($this->state->name, $keys);
+
+        if ($index == false) {
+            return null;
+        }
+
+        if (!isset($keys[$index + 1])) {
+            return null;
+        }
+
+        return $keys[$index + 1];
     }
 }
