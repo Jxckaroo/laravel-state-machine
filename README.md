@@ -28,6 +28,7 @@ Add the `Jxckaroo\StateMachine\Stateable` trait to your model(s) that require st
 Below is an example of a ready-to-go model.
 ```php
 use Illuminate\Database\Eloquent\Model;
+use Jxckaroo\StateMachine\Stateable;
 
 class Order extends Model
 {
