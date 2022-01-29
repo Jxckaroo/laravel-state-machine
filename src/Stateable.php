@@ -153,6 +153,16 @@ trait Stateable
     }
 
     /**
+     * Return all states errors
+     *
+     * @return array
+     */
+    public function transitionErrors()
+    {
+        return $this->stateMachine->getErrors();
+    }
+
+    /**
      * Return all states available
      *
      * @return array

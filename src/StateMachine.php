@@ -2,6 +2,7 @@
 
 namespace Jxckaroo\StateMachine;
 
+use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use Jxckaroo\StateMachine\Models\State;
 use Jxckaroo\StateMachine\Models\StateHistory;
@@ -27,6 +28,11 @@ class StateMachine
      * @var boolean
      */
     protected bool $success;
+
+    /**
+     * @var array
+     */
+    protected array $errors;
 
     /**
      * Get the state of the current model
@@ -63,9 +69,9 @@ class StateMachine
             $activeState->save();
             $activeState = $activeState->fresh();
 
-            $this->success = true;
+            $this->setSuccess(true);
         } else {
-            $this->success = false;
+            $this->setSuccess(false);
         }
 
         return $this;
@@ -109,11 +115,22 @@ class StateMachine
      */
     public function canTransition(mixed $rule)
     {
-        if (is_array($rule)) {
-            return count($rule) == collect($rule)->map(fn ($item) => (new $item)->validate($this->model))->filter(fn ($value) => $value == true)->count();
-        } else {
-            return (new $rule)->validate($this->model);
-        }
+        $rule = Arr::wrap($rule);
+        
+        $ruleset = collect($rule)->map(function ($ruleString) {
+            $rule = new $ruleString;
+            $validation = $rule->validate($this->model);
+
+            if ($validation == false) {
+                $this->errors[] = $rule::class;
+            }
+
+            return $validation;
+        })
+            ->filter(fn ($value) => $value == true)
+            ->count();
+
+        return count($rule) == $ruleset;
     }
 
     public function setRules(mixed $rules)
@@ -132,6 +149,17 @@ class StateMachine
     {
         $this->success = $success;
         return $this;
+    }
+
+    public function setErrors(array $errors)
+    {
+        $this->errors = $errors;
+        return $this;
+    }
+
+    public function getErrors()
+    {
+        return $this->errors;
     }
 
     public function isSuccessful()
