@@ -25,7 +25,9 @@ php artisan migrate
 Add the `Jxckaroo\StateMachine\Stateable` trait to your model(s) that require state management & define your states on your model(s):
 
 ### States & Rules
+
 Below is an example of a ready-to-go model.
+
 ```php
 use Illuminate\Database\Eloquent\Model;
 use Jxckaroo\StateMachine\Stateable;
@@ -61,10 +63,15 @@ class ExampleRule extends StateRule
 
 ### Model Interactions
 
-
 ```php
 // Get model
 $order = Order::find(1);
+
+// Get current state of a model
+$order->state;
+
+// Get the state history of a model
+$order->stateHistory;
 
 // Attempt to transition model to one of your defined states
 $order->transitionTo("factory");
