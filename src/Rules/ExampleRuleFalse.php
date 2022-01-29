@@ -11,14 +11,4 @@ class ExampleRuleFalse extends StateRule
     {
         return false;
     }
-
-    public function passes()
-    {
-
-    }
-
-    public function fails()
-    {
-
-    }
 }

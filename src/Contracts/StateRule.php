@@ -13,14 +13,4 @@ abstract class StateRule
      * @return bool
      */
     abstract public function validate(Model $model): bool;
-
-    /**
-     * Runs when validation passes
-     */
-    abstract public function passes();
-
-    /**
-     * Runs when validation fails
-     */
-    abstract public function fails();
 }

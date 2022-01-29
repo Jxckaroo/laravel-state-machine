@@ -98,7 +98,7 @@ trait Stateable
     public function transitionToNext(): StateMachine
     {
         return $this->transitionTo(
-            $this->getSideState(State::NEXT_STATE)
+            $this->getStatePosition(State::NEXT_STATE)
         );
     }
 
@@ -110,7 +110,7 @@ trait Stateable
     public function transitionToPrevious(): StateMachine
     {
         return $this->transitionTo(
-            $this->getSideState(State::PREVIOUS_STATE)
+            $this->getStatePosition(State::PREVIOUS_STATE)
         );
     }
 
@@ -120,7 +120,7 @@ trait Stateable
      * @param int $type
      * @return string
      */
-    public function getSideState(int $type = State::NEXT_STATE)
+    public function getStatePosition(int $type = State::NEXT_STATE)
     {
         if ($this->state == null) {
             return null;
@@ -150,5 +150,15 @@ trait Stateable
         }
 
         return $response;
+    }
+
+    /**
+     * Return all states available
+     *
+     * @return array
+     */
+    public function states()
+    {
+        return $this->states;
     }
 }

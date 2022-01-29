@@ -11,14 +11,4 @@ class ExampleRule extends StateRule
     {
         return $model->getKey() !== null;
     }
-
-    public function passes()
-    {
-
-    }
-
-    public function fails()
-    {
-
-    }
 }

@@ -2,6 +2,7 @@
 
 namespace Jxckaroo\StateMachine\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -32,6 +33,21 @@ class State extends Model
     public function model(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    /**
+     * @return array
+     */
+    public function getRulesAttribute(): array
+    {
+        try {
+            return collect($this->model()->first()->states())
+                ->filter(fn ($item, $key) => $key == $this->name)
+                ->values()
+                ->toArray();
+        } catch (Exception $e) {
+            return [];
+        }
     }
 
     /**
