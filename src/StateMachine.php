@@ -53,7 +53,7 @@ class StateMachine
      * @param array $attributes
      * @return self
      */
-    public function transitionModelState(array $attributes = []): StateMachine
+    public function transitionModelState(array $attributes = []): self
     {
         if ($this->canTransition($this->rules)) {
             $activeState = $this->getModelState();
@@ -83,7 +83,7 @@ class StateMachine
      * @param array $attributes
      * @return self
      */
-    public function createStateHistoryEntry(array $attributes = []): StateMachine
+    public function createStateHistoryEntry(array $attributes = []): self
     {
         $attributes['state_id'] = $attributes['id'];
         unset($attributes['id']);
@@ -100,7 +100,7 @@ class StateMachine
      *
      * @return self
      */
-    public function logStateChanges(): StateMachine
+    public function logStateChanges(): self
     {
         $this->logStateChanges = true;
 
@@ -137,28 +137,28 @@ class StateMachine
      * @param mixed $rules
      * @return StateMachine
      */
-    public function setRules(mixed $rules): StateMachine
+    public function setRules(mixed $rules): self
     {
         $this->rules = $rules;
 
         return $this;
     }
 
-    public function setModel(Model $model): StateMachine
+    public function setModel(Model $model): self
     {
         $this->model = $model;
 
         return $this;
     }
 
-    public function setSuccess(bool $success): StateMachine
+    public function setSuccess(bool $success): self
     {
         $this->success = $success;
 
         return $this;
     }
 
-    public function setErrors(array $errors): StateMachine
+    public function setErrors(array $errors): self
     {
         $this->errors = $errors;
 
