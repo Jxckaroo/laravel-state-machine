@@ -37,7 +37,7 @@ class StateMachine
     /**
      * Get the state of the current model.
      *
-     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder::static
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder
      */
     public function getModelState()
     {
@@ -53,7 +53,7 @@ class StateMachine
      * @param array $attributes
      * @return self
      */
-    public function transitionModelState(array $attributes = [])
+    public function transitionModelState(array $attributes = []): StateMachine
     {
         if ($this->canTransition($this->rules)) {
             $activeState = $this->getModelState();
@@ -83,7 +83,7 @@ class StateMachine
      * @param array $attributes
      * @return self
      */
-    public function createStateHistoryEntry(array $attributes = [])
+    public function createStateHistoryEntry(array $attributes = []): StateMachine
     {
         $attributes['state_id'] = $attributes['id'];
         unset($attributes['id']);
@@ -100,7 +100,7 @@ class StateMachine
      *
      * @return self
      */
-    public function logStateChanges()
+    public function logStateChanges(): StateMachine
     {
         $this->logStateChanges = true;
 
@@ -133,28 +133,28 @@ class StateMachine
         return count($rule) == $ruleset;
     }
 
-    public function setRules(mixed $rules)
+    public function setRules(mixed $rules): StateMachine
     {
         $this->rules = $rules;
 
         return $this;
     }
 
-    public function setModel(Model $model)
+    public function setModel(Model $model): StateMachine
     {
         $this->model = $model;
 
         return $this;
     }
 
-    public function setSuccess(bool $success)
+    public function setSuccess(bool $success): StateMachine
     {
         $this->success = $success;
 
         return $this;
     }
 
-    public function setErrors(array $errors)
+    public function setErrors(array $errors): StateMachine
     {
         $this->errors = $errors;
 
