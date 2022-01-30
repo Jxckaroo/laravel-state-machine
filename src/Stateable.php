@@ -7,18 +7,15 @@ use Jxckaroo\StateMachine\Exceptions\StateNotExistException;
 use Jxckaroo\StateMachine\Models\State;
 use Jxckaroo\StateMachine\Models\StateHistory;
 
-/**
- * @package Jxckaroo\StateMachine
- */
 trait Stateable
 {
     /**
-     * @var StateMachine $stateMachine
+     * @var StateMachine
      */
     private StateMachine $stateMachine;
 
     /**
-     * Initialize the trait
+     * Initialize the trait.
      *
      * @return void
      */
@@ -28,7 +25,7 @@ trait Stateable
     }
 
     /**
-     * Get the current state record of a model
+     * Get the current state record of a model.
      *
      * @return void
      */
@@ -38,7 +35,7 @@ trait Stateable
     }
 
     /**
-     * Get the history of states for a model
+     * Get the history of states for a model.
      *
      * @return void
      */
@@ -52,7 +49,7 @@ trait Stateable
      * if the rules pass.
      *
      * @param string $state
-     * @param boolean $silent
+     * @param bool $silent
      * @return StateMachine
      */
     public function transitionToState(string $state, bool $silent = false): StateMachine
@@ -62,7 +59,7 @@ trait Stateable
                 return $this->stateMachine;
             }
 
-            throw new StateMachineException("`\$states` property not configured correctly on `" . $this::class . "`");
+            throw new StateMachineException('`$states` property not configured correctly on `' . $this::class . '`');
         }
 
         if (!array_key_exists($state, $this->states)) {
@@ -70,7 +67,7 @@ trait Stateable
                 return $this->stateMachine;
             }
 
-            throw new StateNotExistException("State `$state` does not exist on `" . $this::class . "`");
+            throw new StateNotExistException("State `$state` does not exist on `" . $this::class . '`');
         }
 
         if (empty($state)) {
@@ -85,13 +82,13 @@ trait Stateable
                 [
                     'name' => $state,
                     'model_id' => $this->getKey(),
-                    'model_type' => get_class($this)
+                    'model_type' => get_class($this),
                 ]
             );
     }
 
     /**
-     * Transition to next model state
+     * Transition to next model state.
      *
      * @return StateMachine
      */
@@ -103,7 +100,7 @@ trait Stateable
     }
 
     /**
-     * Transition to previous model state
+     * Transition to previous model state.
      *
      * @return StateMachine
      */
@@ -115,7 +112,7 @@ trait Stateable
     }
 
     /**
-     * Retrieve the next/previous state of a model
+     * Retrieve the next/previous state of a model.
      *
      * @param int $type
      * @return string
@@ -153,7 +150,7 @@ trait Stateable
     }
 
     /**
-     * Return all states errors
+     * Return all states errors.
      *
      * @return array
      */
@@ -163,7 +160,7 @@ trait Stateable
     }
 
     /**
-     * Return all states available
+     * Return all states available.
      *
      * @return array
      */

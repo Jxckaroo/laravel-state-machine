@@ -2,15 +2,15 @@
 
 namespace Jxckaroo\StateMachine;
 
-use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Jxckaroo\StateMachine\Models\State;
 use Jxckaroo\StateMachine\Models\StateHistory;
 
 class StateMachine
 {
     /**
-     * @var boolean $logStateChanges
+     * @var bool
      */
     protected bool $logStateChanges = false;
 
@@ -25,7 +25,7 @@ class StateMachine
     protected Model $model;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected bool $success;
 
@@ -35,20 +35,20 @@ class StateMachine
     protected array $errors;
 
     /**
-     * Get the state of the current model
+     * Get the state of the current model.
      *
      * @return \Illuminate\Database\Eloquent\Model|static
      */
     public function getModelState()
     {
         return State::query()
-            ->where("model_type", get_class($this->model))
-            ->where("model_id", $this->model->getKey())
+            ->where('model_type', get_class($this->model))
+            ->where('model_id', $this->model->getKey())
             ->firstOrNew();
     }
 
     /**
-     * Save the state of the model
+     * Save the state of the model.
      *
      * @param array $attributes
      * @return self
@@ -78,7 +78,7 @@ class StateMachine
     }
 
     /**
-     * Save the state of the model
+     * Save the state of the model.
      *
      * @param array $attributes
      * @return self
@@ -96,7 +96,7 @@ class StateMachine
     }
 
     /**
-     * Enable logging of state change
+     * Enable logging of state change.
      *
      * @return self
      */
@@ -108,7 +108,7 @@ class StateMachine
     }
 
     /**
-     * Validate that all rules pass
+     * Validate that all rules pass.
      *
      * @param string|[]string $rule
      * @return void
@@ -116,7 +116,7 @@ class StateMachine
     public function canTransition(mixed $rule)
     {
         $rule = Arr::wrap($rule);
-        
+
         $ruleset = collect($rule)->map(function ($ruleString) {
             $rule = new $ruleString;
             $validation = $rule->validate($this->model);
@@ -136,24 +136,28 @@ class StateMachine
     public function setRules(mixed $rules)
     {
         $this->rules = $rules;
+
         return $this;
     }
 
     public function setModel(Model $model)
     {
         $this->model = $model;
+
         return $this;
     }
 
     public function setSuccess(bool $success)
     {
         $this->success = $success;
+
         return $this;
     }
 
     public function setErrors(array $errors)
     {
         $this->errors = $errors;
+
         return $this;
     }
 

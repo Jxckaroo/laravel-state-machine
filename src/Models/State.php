@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class State extends Model
 {
     /**
-     * Constants
+     * Constants.
      */
     public const PREVIOUS_STATE = 0;
     public const NEXT_STATE = 1;
@@ -24,7 +24,7 @@ class State extends Model
         'name',
         'description',
         'model_type',
-        'model_id'
+        'model_id',
     ];
 
     /**

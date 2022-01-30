@@ -17,7 +17,7 @@ class StateHistory extends Model
         'name',
         'description',
         'model_type',
-        'model_id'
+        'model_id',
     ];
 
     /**
