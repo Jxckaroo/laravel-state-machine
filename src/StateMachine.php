@@ -133,6 +133,10 @@ class StateMachine
         return count($rule) == $ruleset;
     }
 
+    /**
+     * @param mixed $rules
+     * @return StateMachine
+     */
     public function setRules(mixed $rules): StateMachine
     {
         $this->rules = $rules;
