@@ -4,6 +4,8 @@ namespace Jxckaroo\StateMachine;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Jxckaroo\StateMachine\Contracts\StateRule;
+use Jxckaroo\StateMachine\Exceptions\StateMachineRuleNotFoundException;
 use Jxckaroo\StateMachine\Models\State;
 use Jxckaroo\StateMachine\Models\StateHistory;
 
@@ -117,8 +119,22 @@ class StateMachine
     {
         $rule = Arr::wrap($rule);
 
-        $ruleset = collect($rule)->map(function ($ruleString) {
-            $rule = new $ruleString;
+        $ruleset = collect($rule)->map(function ($ruleClass) {
+
+            if (!class_exists($ruleClass)) {
+                throw new StateMachineRuleNotFoundException("`{$ruleClass}` does not exist.");
+            }
+
+            $rule = new $ruleClass;
+
+            if (!is_subclass_of($rule, StateRule::class)) {
+                throw new StateMachineRuleNotFoundException("`{$ruleClass}` does not extend \Jxckaroo\StateMachine\Contracts\StateRule::class.");
+            }
+
+            if (!method_exists($rule, 'validate')) {
+                throw new StateMachineRuleNotFoundException("`{$ruleClass}` does not have a `validate` method.");
+            }
+
             $validation = $rule->validate($this->model);
 
             if ($validation == false) {
