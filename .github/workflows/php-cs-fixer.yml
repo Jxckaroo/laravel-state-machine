@@ -5,19 +5,17 @@ on: [push]
 jobs:
   php-cs-fixer:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
 
-      - name: Run PHP CS Fixer
-        uses: friendsofphp/php-cs-fixer
-        with:
-          args: --config=.php-cs-fixer.dist.php --allow-risky=yes
+      - name: Install
+        run: composer install
 
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
+      - name: Run php-cs-fixer
+        run: ./vendor/bin/php-cs-fixer fix
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: Fix styling
+          commit_message: Apply php-cs-fixer changes
