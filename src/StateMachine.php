@@ -15,7 +15,7 @@ class StateMachine
     protected bool $logStateChanges = false;
 
     /**
-     * @var string|[]string
+     * @var mixed
      */
     protected mixed $rules;
 
@@ -37,7 +37,7 @@ class StateMachine
     /**
      * Get the state of the current model.
      *
-     * @return \Illuminate\Database\Eloquent\Model|static
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder::static
      */
     public function getModelState()
     {
@@ -56,7 +56,7 @@ class StateMachine
     public function transitionModelState(array $attributes = [])
     {
         if ($this->canTransition($this->rules)) {
-            $activeState = $this->getModelState($this->model);
+            $activeState = $this->getModelState();
 
             if ($this->logStateChanges && $activeState->getKey() !== null) {
                 $this->createStateHistoryEntry($activeState->getAttributes());
@@ -67,7 +67,7 @@ class StateMachine
             }
 
             $activeState->save();
-            $activeState = $activeState->fresh();
+            $activeState->fresh();
 
             $this->setSuccess(true);
         } else {
@@ -110,10 +110,10 @@ class StateMachine
     /**
      * Validate that all rules pass.
      *
-     * @param string|[]string $rule
-     * @return void
+     * @param mixed $rule
+     * @return bool
      */
-    public function canTransition(mixed $rule)
+    public function canTransition(mixed $rule): bool
     {
         $rule = Arr::wrap($rule);
 

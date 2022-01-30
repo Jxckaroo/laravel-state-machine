@@ -42,7 +42,7 @@ class State extends Model
     {
         try {
             return collect($this->model()->first()->states())
-                ->filter(fn ($item, $key) => $key == $this->name)
+                ->filter(fn ($item, $key) => $item !== null && $key == $this->name)
                 ->values()
                 ->toArray();
         } catch (Exception $e) {
