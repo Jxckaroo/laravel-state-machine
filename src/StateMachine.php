@@ -120,7 +120,6 @@ class StateMachine
         $rule = Arr::wrap($rule);
 
         $ruleset = collect($rule)->map(function ($ruleClass) {
-
             if (!class_exists($ruleClass)) {
                 throw new StateMachineRuleNotFoundException("`{$ruleClass}` does not exist.");
             }
