@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'd66989a26260493d488287c1e71ea4bcea6bfdb9',
+        'reference' => 'e0f0b2eb9788236c5e18cecf7d363548632003ef',
         'name' => 'jxckaroo/laravel-state-machine',
         'dev' => true,
     ),
@@ -439,7 +439,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'd66989a26260493d488287c1e71ea4bcea6bfdb9',
+            'reference' => 'e0f0b2eb9788236c5e18cecf7d363548632003ef',
             'dev_requirement' => false,
         ),
         'kodova/hamcrest-php' => array(

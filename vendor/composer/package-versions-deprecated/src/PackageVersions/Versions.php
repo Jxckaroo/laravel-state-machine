@@ -164,7 +164,7 @@ final class Versions
   'zbateson/mail-mime-parser' => '2.2.0@038d5043a54ee198ed96ab5fd39f16231272b32e',
   'zbateson/mb-wrapper' => '1.1.1@bfd45fb3e2a8cf4c496b2c3ebd63b5f815721498',
   'zbateson/stream-decorators' => '1.0.6@3403c4323bd1cd15fe54348b031b26b064c706af',
-  'jxckaroo/laravel-state-machine' => 'dev-develop@d66989a26260493d488287c1e71ea4bcea6bfdb9',
+  'jxckaroo/laravel-state-machine' => 'dev-develop@e0f0b2eb9788236c5e18cecf7d363548632003ef',
 );
 
     private function __construct()
