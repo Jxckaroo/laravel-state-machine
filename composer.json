@@ -1,20 +1,20 @@
 {
-    "name": "jxckaroo/state-machine",
+    "name": "jxckaroo/laravel-state-machine",
     "description": "A simple state machine to handle status transitions.",
     "keywords": [
         "jxckaroo",
-        "state-machine"
+        "state-machine",
+        "laravel-state-machine",
+        "laravel"
     ],
-    "homepage": "https://github.com/jxckaroo/state-machine",
+    "homepage": "https://github.com/jxckaroo/laravel-state-machine",
     "license": "MIT",
     "type": "library",
-    "authors": [
-        {
-            "name": "Jack Mollart",
-            "email": "jack@javeloper.co.uk",
-            "role": "Developer"
-        }
-    ],
+    "authors": [{
+        "name": "Jack Mollart",
+        "email": "jack@javeloper.co.uk",
+        "role": "Developer"
+    }],
     "require": {
         "php": "^7.4|^8.0",
         "illuminate/support": "^8.0"
