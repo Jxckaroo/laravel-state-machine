@@ -2,7 +2,6 @@
 
 namespace Jxckaroo\StateMachine;
 
-use Exception;
 use Illuminate\Support\ServiceProvider;
 use Jxckaroo\StateMachine\Models\State;
 
