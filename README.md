@@ -11,7 +11,7 @@ This simple state machine allows transitioning model states based on pre-defined
 You can install the package via composer:
 
 ```bash
-composer require jxckaroo/state-machine
+composer require jxckaroo/laravel-state-machine
 ```
 
 Run the package migrations:
