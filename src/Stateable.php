@@ -55,7 +55,7 @@ trait Stateable
      * @param boolean $silent
      * @return StateMachine
      */
-    public function transitionTo(string $state, bool $silent = false): StateMachine
+    public function transitionToState(string $state, bool $silent = false): StateMachine
     {
         if (!property_exists($this, 'states') || !is_array($this->states)) {
             if ($silent) {
@@ -95,9 +95,9 @@ trait Stateable
      *
      * @return StateMachine
      */
-    public function transitionToNext(): StateMachine
+    public function transitionToNextState(): StateMachine
     {
-        return $this->transitionTo(
+        return $this->transitionToState(
             $this->getStatePosition(State::NEXT_STATE)
         );
     }
@@ -107,9 +107,9 @@ trait Stateable
      *
      * @return StateMachine
      */
-    public function transitionToPrevious(): StateMachine
+    public function transitionToPreviousState(): StateMachine
     {
-        return $this->transitionTo(
+        return $this->transitionToState(
             $this->getStatePosition(State::PREVIOUS_STATE)
         );
     }
@@ -157,7 +157,7 @@ trait Stateable
      *
      * @return array
      */
-    public function transitionErrors()
+    public function transitionToStateErrors()
     {
         return $this->stateMachine->getErrors();
     }

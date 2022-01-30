@@ -74,13 +74,13 @@ $order->state;
 $order->stateHistory;
 
 // Attempt to transition model to one of your defined states
-$order->transitionTo("factory");
+$order->transitionToState("factory");
 
 // Attempt to transition model to previous state as defined in $order->states
-$order->transitionToPrevious();
+$order->transitionToPreviousState();
 
 // Attempt to transition model to next state as defined in $order->states
-$order->transitionToNext();
+$order->transitionToNextState();
 
 // Get all available states on model
 $order->states();
@@ -91,11 +91,11 @@ Check if a state transition is successful:
 ```php
 $order = Order::find(1);
 
-if ($order->transitionTo("complete")->isSuccessful()) {
+if ($order->transitionToState("complete")->isSuccessful()) {
     // Successful transition
 } else {
     // Get an array of all rules that failed
-    $order->transitionErrors();
+    $order->transitionToStateErrors();
 }
 ```
 
