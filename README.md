@@ -3,7 +3,6 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/jxckaroo/state-machine.svg?style=flat-square)](https://packagist.org/packages/jxckaroo/state-machine)
 [![Total Downloads](https://img.shields.io/packagist/dt/jxckaroo/state-machine.svg?style=flat-square)](https://packagist.org/packages/jxckaroo/state-machine)
 ![GitHub Actions](https://github.com/Jxckaroo/laravel-state-machine/actions/workflows/php-cs-fixer.yml/badge.svg)
-![GitHub Actions](https://github.com/Jxckaroo/laravel-state-machine/actions/workflows/php-cs-fixer.yml/badge.svg)
 ![GitHub Actions](https://github.com/Jxckaroo/laravel-state-machine/actions/workflows/psalm.yml/badge.svg)
 ![GitHub Actions](https://github.com/Jxckaroo/laravel-state-machine/actions/workflows/run-tests.yml/badge.svg)
 
