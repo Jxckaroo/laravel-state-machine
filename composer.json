@@ -1,27 +1,33 @@
 {
-    "name": "jxckaroo/state-machine",
-    "description": "A simple state machine to handle status transitions.",
+    "name": "jxckaroo/laravel-state-machine",
+    "description": "A simple state machine to handle model transactions, based on a list of pre-defined rules, for Laravel.",
     "keywords": [
         "jxckaroo",
-        "state-machine"
+        "state-machine",
+        "laravel-state-machine",
+        "laravel"
     ],
-    "homepage": "https://github.com/jxckaroo/state-machine",
+    "homepage": "https://github.com/jxckaroo/laravel-state-machine",
     "license": "MIT",
     "type": "library",
-    "authors": [
-        {
-            "name": "Jack Mollart",
-            "email": "jack@javeloper.co.uk",
-            "role": "Developer"
-        }
-    ],
+    "authors": [{
+        "name": "Jack Mollart",
+        "email": "jack@javeloper.co.uk",
+        "role": "Developer"
+    }],
     "require": {
         "php": "^7.4|^8.0",
-        "illuminate/support": "^8.0"
+        "illuminate/database": "^5.0 || ^6.0 || ^7.0 || ^8.0",
+        "illuminate/support": "^5.0 || ^6.0 || ^7.0 || ^8.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^6.0",
-        "phpunit/phpunit": "^9.0"
+        "brianium/paratest": "^6.2",
+        "nunomaduro/collision": "^5.3",
+        "orchestra/testbench": "^6.15",
+        "phpunit/phpunit": "^9.3",
+        "spatie/laravel-ray": "^1.9",
+        "vimeo/psalm": "^4.4",
+        "friendsofphp/php-cs-fixer": "^3.5"
     },
     "autoload": {
         "psr-4": {
@@ -35,7 +41,13 @@
     },
     "scripts": {
         "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "sniff": [
+            "./vendor/bin/php-cs-fixer fix -vvv --dry-run --show-progress=dots"
+        ],
+        "lint": [
+            "./vendor/bin/php-cs-fixer fix -vvv --show-progress=dots"
+        ]
 
     },
     "config": {
