@@ -2,6 +2,6 @@
 
 namespace Jxckaroo\StateMachine\Exceptions;
 
-class StateMachineException extends \Exception
+class StateNotFoundException extends \Exception
 {
 }
