@@ -1,11 +1,11 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => 'dev-develop',
-        'version' => 'dev-develop',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '05180298560f2e48a6b6d45a1929ef8f2c323178',
+        'reference' => 'f665cc2f124360ad300726d907cd8c0f843cbf4a',
         'name' => 'jxckaroo/laravel-state-machine',
         'dev' => true,
     ),
@@ -434,12 +434,12 @@
             ),
         ),
         'jxckaroo/laravel-state-machine' => array(
-            'pretty_version' => 'dev-develop',
-            'version' => 'dev-develop',
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '05180298560f2e48a6b6d45a1929ef8f2c323178',
+            'reference' => 'f665cc2f124360ad300726d907cd8c0f843cbf4a',
             'dev_requirement' => false,
         ),
         'kodova/hamcrest-php' => array(
@@ -853,8 +853,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0',
-                1 => '1.0.0 || 2.0.0 || 3.0.0',
+                0 => '1.0.0 || 2.0.0 || 3.0.0',
+                1 => '1.0|2.0',
             ),
         ),
         'psr/simple-cache' => array(
