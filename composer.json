@@ -1,6 +1,6 @@
 {
     "name": "jxckaroo/laravel-state-machine",
-    "description": "A simple state machine to handle status transitions.",
+    "description": "A simple state machine to handle model transactions, based on a list of pre-defined rules, for Laravel.",
     "keywords": [
         "jxckaroo",
         "state-machine",
