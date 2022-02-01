@@ -154,7 +154,7 @@ trait Stateable
      *
      * @return array
      */
-    public function transitionToStateErrors()
+    public function stateErrors()
     {
         return $this->stateMachine->getErrors();
     }
