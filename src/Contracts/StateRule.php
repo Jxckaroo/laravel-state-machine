@@ -2,8 +2,8 @@
 
 namespace Jxckaroo\StateMachine\Contracts;
 
-use \Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 abstract class StateRule
 {
@@ -13,7 +13,7 @@ abstract class StateRule
     protected Collection $errors;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -33,14 +33,15 @@ abstract class StateRule
      *
      * @return self
      */
-    public function addError(string $error = ""): self
+    public function addError(string $error = ''): self
     {
         $this->errors->add(['message' => $error, 'rule' => get_class($this)]);
+
         return $this;
     }
 
     /**
-     * Return a collection of errors
+     * Return a collection of errors.
      *
      * @return Collection
      */

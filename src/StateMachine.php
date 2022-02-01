@@ -38,7 +38,7 @@ class StateMachine
     protected Collection $errors;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {

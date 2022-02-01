@@ -9,7 +9,8 @@ class ExampleRuleFalse extends StateRule
 {
     public function validate(Model $model): bool
     {
-        $this->addError("This is an error message. This rule has failed.");
+        $this->addError('This is an error message. This rule has failed.');
+
         return false;
     }
 }
