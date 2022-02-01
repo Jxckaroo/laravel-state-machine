@@ -4,6 +4,7 @@ namespace Jxckaroo\StateMachine;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Jxckaroo\StateMachine\Contracts\StateRule;
 use Jxckaroo\StateMachine\Exceptions\StateMachineRuleNotFoundException;
 use Jxckaroo\StateMachine\Models\State;
@@ -32,9 +33,17 @@ class StateMachine
     protected bool $success;
 
     /**
-     * @var array
+     * @var Collection
      */
-    protected array $errors;
+    protected Collection $errors;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->errors = collect();
+    }
 
     /**
      * Get the state of the current model.
@@ -137,7 +146,9 @@ class StateMachine
             $validation = $rule->validate($this->model);
 
             if ($validation == false) {
-                $this->errors[] = $rule::class;
+                $this->setErrors(
+                    $this->errors->merge($rule->errors())
+                );
             }
 
             return $validation;
@@ -173,14 +184,14 @@ class StateMachine
         return $this;
     }
 
-    public function setErrors(array $errors): self
+    public function setErrors(Collection $errors): self
     {
         $this->errors = $errors;
 
         return $this;
     }
 
-    public function getErrors()
+    public function getErrors(): Collection
     {
         return $this->errors;
     }
