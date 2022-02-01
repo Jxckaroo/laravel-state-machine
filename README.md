@@ -63,6 +63,43 @@ class ExampleRule extends StateRule
 
 ```
 
+You can also add specific error messages when a validation fails, like so:
+
+```php
+class ExampleRuleFailure extends StateRule
+{
+    public function validate(Model $model): bool
+    {
+        if (!$model->isProductionReady()) {
+            $this->addError("Model is not ready for production.");
+            return false;
+        }
+
+        return true;
+    }
+}
+
+```
+
+These error messages can then be retrieved by calling `$model->stateErrors()` after attempting to transition state, resulting in a collection of errors returning, like below:
+
+```php
+Illuminate\Support\Collection Object
+(
+    [items:protected] => Array
+        (
+            [0] => Array
+                (
+                    [message] => Model is not ready for production.
+                    [rule] => Jxckaroo\StateMachine\Rules\ExampleRuleFailure
+                )
+
+        )
+
+    [escapeWhenCastingToString:protected] =>
+)
+```
+
 ### Model Interactions
 
 ```php
@@ -96,8 +133,8 @@ $order = Order::find(1);
 if ($order->transitionToState("complete")->isSuccessful()) {
     // Successful transition
 } else {
-    // Get an array of all rules that failed
-    $order->transitionToStateErrors();
+    // Get a collection of all rules that failed
+    $order->stateErrors();
 }
 ```
 
